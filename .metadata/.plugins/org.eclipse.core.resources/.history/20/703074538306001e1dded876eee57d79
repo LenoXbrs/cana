@@ -1,0 +1,51 @@
+
+
+public class Questao3 {
+	 private static final int TAMANHO_TABULEIRO = 8; // Tamanho do tabuleiro de xadrez
+	    private static final int[] MOVIMENTO_HORIZONTAL = {2, 1, -1, -2, -2, -1, 1, 2}; // Movimento horizontal do cavalo
+	    private static final int[] MOVIMENTO_VERTICAL = {-1, -2, -2, -1, 1, 2, 2, 1}; // Movimento vertical do cavalo
+
+	    public static void main(String[] args) {
+	        int[][] tabuleiro = new int[TAMANHO_TABULEIRO][TAMANHO_TABULEIRO];
+	        int inicioX = 0; // Posição inicial do cavalo (coordenada X)
+	        int inicioY = 0; // Posição inicial do cavalo (coordenada Y)
+
+	        if (resolverPasseioCavalo(tabuleiro, inicioX, inicioY, 1)) {
+	            exibirTabuleiro(tabuleiro);
+	        } else {
+	            System.out.println("Não há solução para o problema do cavalo com as coordenadas iniciais fornecidas.");
+	        }
+	    }
+
+	    public static boolean resolverPasseioCavalo(int[][] tabuleiro, int x, int y, int movimento) {
+	        if (movimento == TAMANHO_TABULEIRO * TAMANHO_TABULEIRO + 1) {
+	            return true; // Todas as casas foram visitadas, solução encontrada
+	        }
+
+	        if (x < 0 || x >= TAMANHO_TABULEIRO || y < 0 || y >= TAMANHO_TABULEIRO || tabuleiro[x][y] != 0) {
+	            return false; // Movimento inválido ou casa já visitada, retorna falso
+	        }
+
+	        tabuleiro[x][y] = movimento; // Marca a casa atual como visitada
+
+	        for (int i = 0; i < MOVIMENTO_HORIZONTAL.length; i++) {
+	            int novoX = x + MOVIMENTO_HORIZONTAL[i];
+	            int novoY = y + MOVIMENTO_VERTICAL[i];
+	            if (resolverPasseioCavalo(tabuleiro, novoX, novoY, movimento + 1)) {
+	                return true; // Encontrou uma solução válida
+	            }
+	        }
+
+	        tabuleiro[x][y] = 0; // Desmarca a casa atual, pois não levou a uma solução válida
+	        return false;
+	    }
+
+	    public static void exibirTabuleiro(int[][] tabuleiro) {
+	        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+	            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+	                System.out.print(tabuleiro[i][j] + "\t");
+	            }
+	            System.out.println();
+	        }
+	    }
+}

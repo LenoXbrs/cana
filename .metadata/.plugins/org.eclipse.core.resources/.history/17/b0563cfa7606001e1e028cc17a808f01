@@ -1,0 +1,64 @@
+import java.util.Arrays;
+
+public class Questao1 {
+	
+	public static void main(String[] args) {
+        int[] arr = {4, 2, 9, 6, 1, 5, 3, 8, 7};
+        mergeSort(arr, 0, arr.length - 1);
+        System.out.println("Array ordenado em ordem decrescente:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+
+    public static void merge(int[] arr, int left, int mid, int right) {
+        int[] leftArray = new int[mid - left + 1];
+        int[] rightArray = new int[right - mid];
+
+        for (int i = 0; i < leftArray.length; i++) {
+            leftArray[i] = arr[left + i];
+        }
+        for (int i = 0; i < rightArray.length; i++) {
+            rightArray[i] = arr[mid + 1 + i];
+        }
+
+        int i = 0, j = 0, k = left;
+        while (i < leftArray.length && j < rightArray.length) {
+            if (leftArray[i] >= rightArray[j]) {
+                arr[k] = leftArray[i];
+                System.out.println("Antes da troca: " + Arrays.toString(arr));
+                i++;
+            } else {
+                arr[k] = rightArray[j];
+                System.out.println("Antes da troca: " + Arrays.toString(arr));
+                j++;
+            }
+            k++;
+        }
+
+        while (i < leftArray.length) {
+            arr[k] = leftArray[i];
+            System.out.println("Antes da troca: " + Arrays.toString(arr));
+            i++;
+            k++;
+        }
+
+        while (j < rightArray.length) {
+            arr[k] = rightArray[j];
+            System.out.println("Antes da troca: " + Arrays.toString(arr));
+            j++;
+            k++;
+        }
+        System.out.println("Depois da troca: " + Arrays.toString(arr));
+    }
+
+}
